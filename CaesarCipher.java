@@ -58,21 +58,25 @@ public class CaesarCipher {
         StringBuilder encrypted = new StringBuilder(input);
         for (int i = 0; i < encrypted.length(); i++) {
             char currChar = encrypted.charAt(i);
-            if (i%2 == 0)
-                encrypted.setCharAt(i, encryptChar(currChar, key1));
-            else 
-                encrypted.setCharAt(i, encryptChar(currChar, key2));
+            int idx = alphabet.indexOf(currChar);
+            if (idx == -1) idx = alphabetLowCase.indexOf(currChar);
+            if (idx != -1)
+                if (i%2 == 0)
+                    encrypted.setCharAt(i, encryptChar(currChar, key1));
+                else 
+                    encrypted.setCharAt(i, encryptChar(currChar, key2));
         }
         return encrypted.toString();
     }
     public void testCaesar() {
-        int key = 17;
+        int key1 = 8;
+        int key2 = 21;
         FileResource fr = new FileResource();
         String message = fr.asString();
-        String encrypted = encrypt(message, key);
+        String encrypted = encrypt(message, key1, key2);
         System.out.println(encrypted);
-        String decrypted = encrypt(encrypted, 26-key);
-        System.out.println(decrypted);
+        //String decrypted = encrypt(encrypted, 26-key);
+       // System.out.println(decrypted);
     }
 }
 
